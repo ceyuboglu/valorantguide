@@ -1,15 +1,16 @@
-package com.ceyuboglu.valorantguide.presentation.home
+package com.ceyuboglu.valorantguide.presentation.agents
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,58 +27,55 @@ import androidx.compose.ui.unit.sp
 import com.ceyuboglu.valorantguide.R
 
 @Composable
-fun HomeScreen() {
+fun AgentListScreen() {
+    val agentList = listOf("jett","sove","raze","omen","breach")
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
-        items(3) {
-            HomeMenuCard()
+        items(agentList.chunked(2).size) { index ->
+            Row(modifier = Modifier.fillMaxWidth()) {
+                agentList.chunked(2).get(index).forEach {
+                    AgentCard(modifier = Modifier.weight(1f))
+                }
+            }
         }
     }
 }
 
 @Composable
-private fun HomeMenuCard() {
+private fun AgentCard(modifier: Modifier) {
     Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(140.dp)
+        modifier = modifier
+            .height(260.dp)
+            .width(150.dp)
             .padding(horizontal = 18.dp, vertical = 24.dp),
         border = BorderStroke(1.dp, Color.Red),
         color = Color(0xff141E29)
     ) {
-        Row(modifier = Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+        Column(
+            modifier = Modifier.fillMaxSize().padding(8.dp),
+            verticalArrangement = Arrangement.SpaceAround,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier,
                 textAlign = TextAlign.Center,
-                text = "Agents",
-                fontSize = 28.sp,
+                text = "Jett",
+                fontSize = 16.sp,
                 color = Color.White
             )
-            Box {
-                Image(
-                    modifier = Modifier.fillMaxHeight(),
-                    painter = painterResource(id = R.drawable.homecardbg),
-                    contentScale = ContentScale.Inside,
-                    contentDescription = "Agent list"
-                )
-                Image(
-                    modifier = Modifier.fillMaxHeight(),
-                    painter = painterResource(id = R.drawable.agents),
-                    contentScale = ContentScale.Inside,
-                    contentDescription = "Agent list"
-                )
-            }
-
+            Image(
+                modifier = Modifier.fillMaxWidth(),
+                painter = painterResource(id = R.drawable.jett),
+                contentScale = ContentScale.Inside,
+                contentDescription = "Agent list"
+            )
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun HomeScreenPreview() {
-    HomeScreen()
+private fun AgentListScreenPreview() {
+    AgentListScreen()
 }
