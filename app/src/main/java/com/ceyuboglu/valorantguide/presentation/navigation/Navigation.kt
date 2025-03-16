@@ -64,11 +64,15 @@ fun AppNavHost() {
             route = AppScreen.AgentDetail.route
         ) { backStackEntry ->
             val agentId = backStackEntry.arguments?.getString("agentId")
-            AgentDetailScreen(agentId = agentId)
+            AgentDetailScreen(
+                agentId = agentId,
+                onTapBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
-
 
 
 sealed class AppScreen(val route: String) {
