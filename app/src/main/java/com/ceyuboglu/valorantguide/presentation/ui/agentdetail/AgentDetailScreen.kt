@@ -1,4 +1,4 @@
-package com.ceyuboglu.valorantguide.presentation.agentdetail
+package com.ceyuboglu.valorantguide.presentation.ui.agentdetail
 
 import android.widget.Space
 import androidx.compose.foundation.BorderStroke
@@ -25,7 +25,9 @@ import androidx.compose.ui.unit.sp
 import com.ceyuboglu.valorantguide.R
 
 @Composable
-fun AgentDetailScreen() {
+fun AgentDetailScreen(
+    agentId: String?
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -94,5 +96,5 @@ private fun AgentInfoSectionItem() {
 @Preview(showBackground = true)
 @Composable
 private fun AgentDetailScreenPreview() {
-    AgentDetailScreen()
+    AgentDetailScreen("")
 }

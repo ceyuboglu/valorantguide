@@ -1,7 +1,8 @@
-package com.ceyuboglu.valorantguide.presentation.home
+package com.ceyuboglu.valorantguide.presentation.ui.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -24,25 +25,38 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ceyuboglu.valorantguide.R
+import com.ceyuboglu.valorantguide.presentation.ui.AppTopBar
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onNavigateToAgents: () -> Unit
+) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
+        item {
+            AppTopBar(
+                title = "VALOGUIDE"
+            )
+        }
         items(3) {
-            HomeMenuCard()
+            HomeMenuCard(
+                onTap = onNavigateToAgents
+            )
         }
     }
 }
 
 @Composable
-private fun HomeMenuCard() {
+private fun HomeMenuCard(
+    onTap: () -> Unit
+) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .height(140.dp)
-            .padding(horizontal = 18.dp, vertical = 24.dp),
+            .padding(horizontal = 18.dp, vertical = 24.dp)
+            .clickable { onTap() },
         border = BorderStroke(1.dp, Color.Red),
         color = Color(0xff141E29)
     ) {
@@ -79,5 +93,5 @@ private fun HomeMenuCard() {
 @Preview(showBackground = true)
 @Composable
 private fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen({})
 }
