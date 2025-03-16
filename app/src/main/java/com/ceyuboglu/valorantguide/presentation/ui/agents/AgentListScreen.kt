@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -40,12 +41,26 @@ fun AgentListScreen(
     val viewModel: AgentListViewModel = hiltViewModel()
     when (val state = viewModel.uiState.collectAsState().value) {
         AgentsUiState.Error -> {
-            Column(modifier = Modifier.fillMaxSize()) {
-                Text(text = "We're having a trouble to call agents. Please try later")
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 18.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically)
+            ) {
+                Text(
+                    textAlign = TextAlign.Center,
+                    text = "We're having a trouble to call agents.\nPlease try later",
+                    color = Color.White
+                )
                 Button(
                     modifier = Modifier
                         .fillMaxWidth(0.5f)
                         .height(50.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Black
+                    ),
+                    border = BorderStroke(1.dp, Color.Red),
                     onClick = onTapBack
                 ) {
                     Text(text = "Back")
