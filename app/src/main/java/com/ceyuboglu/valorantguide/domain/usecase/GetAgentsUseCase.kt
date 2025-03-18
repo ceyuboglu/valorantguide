@@ -16,6 +16,4 @@ class GetAgentsUseCase @Inject constructor(
             agentsMapper.map(data)
         } else emptyList()
     }
-
-
 }
