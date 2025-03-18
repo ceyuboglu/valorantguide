@@ -1,4 +1,4 @@
-package com.ceyuboglu.valorantguide.presentation.ui
+package com.ceyuboglu.valorantguide.presentation.ui.common
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth

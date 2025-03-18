@@ -1,39 +1,24 @@
 package com.ceyuboglu.valorantguide.presentation.ui.agents
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil3.compose.AsyncImage
-import com.ceyuboglu.valorantguide.R
 import com.ceyuboglu.valorantguide.presentation.model.AgentUiModel
-import com.ceyuboglu.valorantguide.presentation.ui.AppTopBar
+import com.ceyuboglu.valorantguide.presentation.ui.common.AppTopBar
+import com.ceyuboglu.valorantguide.presentation.ui.agents.components.AgentCard
+import com.ceyuboglu.valorantguide.presentation.ui.agents.components.AgentListErrorScreen
 
 @Composable
 fun AgentListScreen(
@@ -42,33 +27,7 @@ fun AgentListScreen(
 ) {
     val viewModel: AgentListViewModel = hiltViewModel()
     when (val state = viewModel.uiState.collectAsState().value) {
-        AgentsUiState.Error -> {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 18.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically)
-            ) {
-                Text(
-                    textAlign = TextAlign.Center,
-                    text = "We're having a trouble to call agents.\nPlease try later",
-                    color = Color.White
-                )
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth(0.5f)
-                        .height(50.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Black
-                    ),
-                    border = BorderStroke(1.dp, Color.Red),
-                    onClick = onTapBack
-                ) {
-                    Text(text = "Back")
-                }
-            }
-        }
+        AgentsUiState.Error -> AgentListErrorScreen(onTap = onTapBack)
 
         AgentsUiState.Loading -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -115,44 +74,6 @@ private fun AgentListSuccessScreen(
                     )
                 }
             }
-        }
-    }
-}
-
-@Composable
-private fun AgentCard(modifier: Modifier, uiModel: AgentUiModel, onTap: (id: String) -> Unit) {
-
-    Surface(
-        modifier = modifier
-            .height(260.dp)
-            .width(150.dp)
-            .padding(horizontal = 18.dp, vertical = 12.dp)
-            .clickable { onTap(uiModel.id) },
-        border = BorderStroke(1.dp, Color.Red),
-        color = Color(0xff141E29)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp),
-            verticalArrangement = Arrangement.SpaceAround,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                modifier = Modifier,
-                textAlign = TextAlign.Center,
-                text = uiModel.name,
-                fontSize = 16.sp,
-                color = Color.White
-            )
-            AsyncImage(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                model = uiModel.picUrl,
-                contentDescription = "Agent Image",
-                contentScale = ContentScale.Fit,
-                placeholder = painterResource(R.drawable.agentplaceholder)
-            )
         }
     }
 }
