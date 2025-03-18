@@ -2,12 +2,14 @@ package com.ceyuboglu.valorantguide.presentation.ui.agentdetail
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
@@ -74,7 +76,17 @@ fun AgentDetailScreen(
                 }
             }
         }
-        AgentDetailUiState.Loading -> CircularProgressIndicator()
+
+        AgentDetailUiState.Loading -> {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(64.dp),
+                    color = Color.Red,
+                    strokeWidth = 8.dp
+                )
+            }
+        }
+
         is AgentDetailUiState.Success -> AgentDetailSuccess(
             uiModel = state.agentDetailUiModel,
             onTapBack = onTapBack
@@ -127,8 +139,7 @@ private fun AgentAbilityCard(ability: AbilityUiModel) {
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(horizontal = 32.dp)
-,        border = BorderStroke(1.dp, Color.Red),
+            .padding(horizontal = 32.dp), border = BorderStroke(1.dp, Color.Red),
         color = Color(0xff141E29)
     ) {
         Column(
